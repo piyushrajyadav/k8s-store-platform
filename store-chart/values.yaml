@@ -1,0 +1,47 @@
+# Default values for store-chart
+# This is a YAML-formatted file.
+
+# Store configuration
+storeName: "my-store"
+host: "mystore.example.com"
+
+# MySQL configuration
+mysql:
+  image: mysql:8.0
+  rootPassword: "changeme"
+  database: "wordpress"
+  user: "wordpress"
+  password: "changeme"
+  storage:
+    size: 10Gi
+    storageClass: ""  # Use default storage class
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+# WordPress configuration
+wordpress:
+  image: wordpress:latest
+  replicas: 1
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+# Ingress configuration
+ingress:
+  enabled: true
+  className: "nginx"  # Use default ingress class
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  tls:
+    enabled: false
+    secretName: ""

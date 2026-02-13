@@ -1,0 +1,36 @@
+# Production Values (VPS/k3s)
+# Production-ready configuration with higher resources and isolation
+
+storeName: "prod-store"
+host: "store.example.com"
+
+mysql:
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"
+  storage:
+    size: 10Gi
+    storageClass: "local-path" # k3s default, or change to specific class like 'gp2' for AWS
+
+wordpress:
+  replicas: 2 # High availability
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+    limits:
+      memory: "1Gi"
+      cpu: "2000m"
+
+ingress:
+  enabled: true
+  className: "traefik" # k3s default
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  tls:
+    enabled: true
+    secretName: "store-tls-cert"

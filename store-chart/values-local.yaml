@@ -1,0 +1,36 @@
+# Local Development Values (k3d/Minikube)
+# Optimized for fast startup and low resource usage
+
+storeName: "local-store"
+host: "local.localhost"
+
+mysql:
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "500m"
+  storage:
+    size: 1Gi
+    storageClass: "" # Use cluster default (usually local-path for k3d)
+
+wordpress:
+  replicas: 1
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "1000m"
+
+ingress:
+  enabled: true
+  className: "nginx" # k3d usually relies on ingress-nginx
+  annotations:
+    # Local dev annotations
+    # nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  tls:
+    enabled: false
